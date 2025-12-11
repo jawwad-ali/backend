@@ -31,7 +31,7 @@ products = [
 def read_root():
     return {"Hello": "World"}
 
-@app.post("/items/")
+@app.post("/items")
 def create_item(item: Item):  # Now uses Pydantic model
     product_dict = item.model_dump()  # Convert to dict
     products.append(product_dict)
