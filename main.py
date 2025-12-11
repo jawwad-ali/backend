@@ -18,7 +18,7 @@ app.add_middleware(
 
 # Define a proper model
 class Item(BaseModel):
-    id: int
+    id: int | None = None
     name: str
     price: float
 
@@ -34,7 +34,9 @@ def read_root():
 @app.post("/items")
 def create_item(item: Item):  # Now uses Pydantic model
     product_dict = item.model_dump()  # Convert to dict
+    # Auto-generate id if not provided
+    if product_dict["id"] is None:
+        product_dict["id"] = max([p["id"] for p in products], default=0) + 1
     products.append(product_dict)
-   
 
     return {"message": "Item added", "items": products}
