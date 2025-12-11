@@ -1,0 +1,14 @@
+# nixpacks.toml
+[phases.setup]
+# Use the exact Python version you need (3.12 is the latest supported on Railway)
+nixPkgs = ["python312"]
+
+[phases.install]
+# Run pip directly – this completely skips the mise step
+cmds = ["pip install --no-cache-dir -r requirements.txt"]
+
+[phases.build]
+# No build step needed for pure Python
+
+[start]
+cmd = "uvicorn main:app --host 0.0.0.0 --port $PORT"
